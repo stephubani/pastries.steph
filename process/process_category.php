@@ -29,9 +29,9 @@ foreach ($all_products as $product) {
             <p id="product_desc">' . $product['products_description'] . '</p>
             <p id="product_price">Price: ' . $product['product_price'] . '</p>
             <div class="butt">
-                <button class="btn btn-dark add_cart" onclick="add_cart()">Add To Cart 
+                <button class="btn btn-dark add_cart" onclick="alert("hello world")">Add To Cart 
                     <i class="fa-solid fa-cart-shopping fa-beat-fade" style=" color:rgb(241, 241, 121);"></i>
-                </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                              </button>
           </div>
         </div>'
         ;

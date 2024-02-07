@@ -80,7 +80,7 @@ if(isset($_SESSION['customer_active'])){
         <div class="col-md-11 mx-auto">
           <div class="row stylecol">
             <div class="col-md">
-                 <div class="col-md">
+              <div class="col-md">
                 <h1>Welcome! <?php 
                 if(isset($_SESSION['customer_active'])){
                   echo $firstname[1];
@@ -89,23 +89,14 @@ if(isset($_SESSION['customer_active'])){
              
                 
                 ?></h1>
+                <?php
+                require_once 'session_message/success_message.php';
+               
+                ?>
                 <hr>
                 <h4>Please be a little patient while we process your order</h4>
               </div>
-              
-              <div class="col-md d-flex  justify-content-between">
-                <div class="col-md-4">
-                  <h5>Total = N3600</h5>
-                </div>
-
-                <div class="col-md-4">
-                  <button class="btn btn-warning btn-md rounded-0">Confirm Order</button>
-                </div>
-
-                <div class="col-md-4">
-                    <button class="btn btn-warning btn-md rounded-0">Done</button>
-                  </div>
-              </div>
+             
             </div>
 
           </div>

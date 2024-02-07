@@ -2,10 +2,20 @@
 session_start();
 require_once "classes/Customer.php";
 require_once 'classes/Product.php';
+require_once 'classes/Lga.php';
 
 if(isset($_SESSION['customer_active'])){
   $customer_active = $customer->get_userbyid( $_SESSION['customer_active']);
 }
+
+$lga = new Lga();
+$lga_name = $lga->fetch_lga();
+
+
+// echo '<pre>';
+// print_r($lga_name);
+// echo '</pre>';
+// die();
 
 ?>
 
@@ -81,40 +91,60 @@ if(isset($_SESSION['customer_active'])){
           </div>
           <div class="row">
             <div>
-              <form action="process/process_payement.php">
-              <div class="col-md mb-5">
-                <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="floatingInput" placeholder="John Doe" name="Fullname" value="<?php echo $customer_active['customer_fullname']?>">
-                  <label for="floatingInput">FullName</label>
-                </div>
-
-                <div class="mb-3"> 
-                  <label for="">Contact</label>
-                  <input type="text" name="contact" id="" class="form-control" placeholder="+234-000-00">
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 form-floating mb-3">
-                    <input type="text" name="address" id="floatingInput" class="form-control" placeholder="1234, Whitehouse Alagb Str">
-                    <label for="floatingInput">Address</label>
+              <form action="process/process_pay2.php" method="post">
+                <div class="col-md mb-5">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="John Doe" name="fullname" value="<?php echo $customer_active['customer_fullname']?>" required>
+                    <label for="floatingInput">FullName</label>
                   </div>
 
-                  <div class="col-md-6 mb-3">
-                    <label for="">L.G.A</label>
-                    <select name="" id="" class="form-select">
-                        <option value="">Ojodu</option>
-                    </select>
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="John Doe" name="email" value="<?php echo $customer_active['customer_email']?>" required>
+                    <label for="floatingInput">Email</label>
                   </div>
 
                   <div class="mb-3"> 
                     <label for="">Contact</label>
-                    <input type="text" name="contact" id="" class="form-control" placeholder="+234-000-00" value="
-                    <?php 
-                   
-                    ?>">
+                    <input type="text" name="contact" id="" class="form-control" placeholder="+234-000-00" required>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 form-floating mb-3">
+                      <input type="text" name="address" id="floatingInput" class="form-control" placeholder="1234, Whitehouse Alagb Str" required>
+                      <label for="floatingInput">Address</label>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                      <label for="">L.G.A</label>
+                      <select name="lga[]" id="" class="form-select">
+                        <?php
+                        foreach($lga_name as $lga){
+                          ?>
+                          <option value="<?php echo $lga['lga_id']?>"><?php echo$lga['lga_name']?></option>
+                        <?php
+                        } 
+                        ?>
+                        
+                      </select>
+                    </div>
+
+                    <div class="col-md-4 m-auto d-flex justify-content-between">
+                    <label>Total</label>
+                   <?php 
+                        $totalQuantity = 0; 
+                        if (isset($_SESSION['cart'])) {
+                          foreach ($_SESSION['cart'] as $product_id => $quantity) {
+                            $product = $products->fetch_product_byid($product_id);
+                            $totalQuantity = $totalQuantity+($quantity * $product[0]['product_price']);                                            
+                          }
+                        }
+                        echo "<input class ='form-control'name='tot_price' type='text'value='$totalQuantity'>";
+                      ?> 
+                      <button type="submit" name="payment" class="btn btn-warning btn-lg">Pay!</button>
+                    </div>
+
                   </div>
                 </div>
-              </div>
               </form>
             </div>
             

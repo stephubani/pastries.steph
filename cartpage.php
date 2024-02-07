@@ -130,9 +130,9 @@ if(isset($_SESSION['customer_active'])){
                             <button class="input-group-text update-qty increment_btn" >+</button>
                           </div>
                         </td>
-                        <td class="new_quantity"><?php 
-                         echo $product[0]['product_price'];
-                        ?>
+                        <td class="total_price"><?php
+                                      echo $quantity * $product[0]['product_price'];
+                                      ?>
                         </td>
                       </tr> 
                       </form>
@@ -156,12 +156,18 @@ if(isset($_SESSION['customer_active'])){
                 </div>
     
                 <div class="col-md-4">
-                  <!-- <h5>Total <?php 
-                  $total = 0;
-                  $total = $total +($quantity * $product[0]['product_price']);
-                  echo $total;
-                  ?> </h5> -->
+                  <h5>Total <?php 
+                    $totalQuantity = 0; 
+                    if (isset($_SESSION['cart'])) {
+                      foreach ($_SESSION['cart'] as $product_id => $quantity) {
+                        $product = $products->fetch_product_byid($product_id);
+                        $totalQuantity = $totalQuantity+($quantity * $product[0]['product_price']);                                            
+                      }
+                    }
+                    echo $totalQuantity;
+                  ?> </h5>
                 </div>
+
 
                 <div class="col-md-4">
                   <a href="process/process_pay.php"><button class="btn btn-warning btn-md rounded-0">Check Out</button></a>
@@ -232,71 +238,68 @@ if(isset($_SESSION['customer_active'])){
 <script>
 $(document).ready(function(){
    
-    $('.increment_btn').click(function(e){
-        var container = $(this).closest('.cart');
-        var product_id = container.find('.product_id').val();
-        var quantityInput = container.find('.qty-input');
-        var quantity = parseInt(quantityInput.val());
-        var newQuantity = quantity + 1;
-        var Total_price = container.find('.new_quantity');
+  $('.increment_btn').click(function(e){
+    e.preventDefault();
+    var container = $(this).closest('.cart');
+    var product_id = container.find('.product_id').val();
+    var quantityInput = container.find('.qty-input');
+    var quantity = parseInt(quantityInput.val());
+    var Total_price = container.find('.total_price'); 
+    var product_price = parseFloat(container.find('td:eq(2)').text());
 
-        var product_price = parseFloat(container.find('td:eq(2)').text());;
 
-        new_price = product_price * newQuantity;
-        Total_price.text(new_price.toFixed(2));
 
-        quantityInput.val(newQuantity);
-        
-        e.preventDefault()
-        $.ajax({
+    $.ajax({
         type: 'POST',
-        url:'process/process_addcart2.php',
+        url: 'process/process_addcart2.php',
         data: {
-          'new_quantity': newQuantity,
-          'product_id':product_id,
+            'quantity': quantity,  // Send the current quantity to the server
+            'product_id': product_id,
         },
-        success : function(response){
-          console.log(response);
-         quantityInput.val(response);
+        success: function(response){
+            console.log(response);
+
+            // Update the quantity based on the response
+            quantityInput.val(response);
+
+            // If you want to update the total_price as well, calculate it and update the element
+            var new_price = product_price * response;
+            Total_price.text(new_price.toFixed(2));
         }
-      });
-
     });
+  });
 
-    $('.decrement_btn').click(function(e){
-        var container = $(this).closest('.cart');
-        var product_id = container.find('.product_id').val()
-        var quantityInput = container.find('.qty-input');
-        var quantity = parseInt(quantityInput.val());
-        var newQuantity2 = Math.max(quantity - 1, 1);
-        
-        var Total_price = container.find('.new_quantity');
-        var product_price = parseFloat(container.find('td:eq(2)').text());;
 
-        new_price = product_price * newQuantity2;
-        Total_price.text(new_price.toFixed(2))
+  $('.decrement_btn').click(function(e){
+    e.preventDefault();
+    var container = $(this).closest('.cart');
+    var product_id = container.find('.product_id').val();
+    var quantityInput = container.find('.qty-input');
+    var quantity = parseInt(quantityInput.val());
+    var Total_price = container.find('.total_price');  
 
-        quantityInput.val(newQuantity2);
-        e.preventDefault();
-        $.ajax({
+    var product_price = parseFloat(container.find('td:eq(2)').text());
+
+    
+
+    $.ajax({
         type: 'POST',
-        url:'process/process_addcart2.php',
+        url: 'process/process_addcart2.php',
         data: {
-          'new_quantity2': newQuantity2,
-          'product_id':product_id,
+            'quantity2': quantity,  // Send the current quantity to the server
+            'product_id': product_id,
         },
-        success : function(response){
-          console.log(response);
-          quantityInput.val(response);
-        } 
-       
+        success: function(response){
+            console.log(response);
 
-      });
- 
-      
-        
+            // Update the quantity based on the response
+            quantityInput.val(response);
 
+            var new_price = product_price * response;
+            Total_price.text(new_price.toFixed(2));
+        }
     });
+  });
 
     
 });

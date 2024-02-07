@@ -16,6 +16,7 @@ if(isset($_POST['edit_products'])){
             
 
         if($response){
+            header('location:../edit_product.php');
             $_SESSION['success_message'] = 'Product Updated Succesfully';
         }else{
             $_SESSION['error_message'] = 'Im Sorry ! We couldnt update product at the moment';
@@ -47,8 +48,6 @@ if(isset($_POST['edit_products'])){
             $_SESSION['product_img_name'] = $product_img_name;
         }
 
-    }else{
-        echo 'Dont go further';
     }
 
 ?>

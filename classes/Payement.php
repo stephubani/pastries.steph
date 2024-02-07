@@ -64,24 +64,12 @@ class Payement extends Db {
 
 
 
-    public function insert_payementdetails($user_id , $fullname , $amount , $email, $ref){
-        $query = "INSERT INTO donation SET don_amt=?, don_userid=? , don_fullname=?,don_email=?,don_reference=?";
+    public function insert_payementdetails($payement_amt , $order_id , $payement_ref ){
+        $query = "INSERT INTO payement SET payement_amt=?, customer_order_id=? ,payement_reference=? customer_id=?";
         $statement = $this->dbconn->prepare($query);
-        $result = $statement->execute([$amount , $user_id,$fullname,$email,$ref]);
+        $result = $statement->execute([$payement_amt , $order_id,$payement_ref]);
         return $result;
     }
 
-    public function get_donation($ref){
-        try{
-            $query = "SELECT * FROM donation WHERE don_reference=?";
-            $statement = $this->dbconn->prepare($query);
-            $statement->execute([$ref]);
-            $result =   $statement->fetch(PDO::FETCH_ASSOC);
-            return $result;
-        }catch(Exception $e){
-            $e->getMessage();die();
-            return false;
-        }
-       
-    }
+ 
 }

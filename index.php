@@ -8,7 +8,10 @@ if(isset($_SESSION['customer_active'])){
   $customer_active = $customer->get_userbyid( $_SESSION['customer_active']);
 }
 if(isset($_SESSION['cart'])){
-  $cart_num =  count($_SESSION['cart']);
+  $cart_num =  count(array_keys($_SESSION['cart']));
+
+
+  
 }
 
 
@@ -202,6 +205,13 @@ if(isset($_SESSION['cart'])){
 
         <center>
           <div class="row sorted_product">
+
+          <?php
+          require_once "session_message/success_message.php";
+          require_once "session_message/error_message.php";
+
+          
+          ?>
           
               <?php
               foreach($all_product as $value){
