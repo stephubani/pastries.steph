@@ -10,7 +10,7 @@ class Order extends Db{
     }
 
     public function insert_orders($total_price,$address,$customer_id ,$reference){
-        $sql = 'INSERT INTO orders(orders_amt, orders_shipping_address,customer_id, orders_reference)VALUES(?,?,?,?)';
+        $sql = 'INSERT INTO orders (orders_amt, orders_shipping_address,customer_id, orders_reference)VALUES(?,?,?,?)';
         $statement = $this->dbconn->prepare($sql);
         $response = $statement->execute([$total_price, $address, $customer_id ,$reference]);
         if($response){
@@ -40,6 +40,8 @@ class Order extends Db{
             return false;
         }
     }
+
+   
 }
 
 

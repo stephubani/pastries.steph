@@ -118,7 +118,8 @@ session_start();
                 </div>
 
                 <div class="text-center mt-5">
-                  <p>Already have an account? <a href="loginpage.php">login</a></p> 
+                  <p>Already have an account? <a href="loginpage.php">login</a></p>
+                  <h6>Are you a staff? <a href="admin/adminregister_page.php">Register here</a></h6> 
                 </div>
             </form>
         </div>

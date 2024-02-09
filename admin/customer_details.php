@@ -131,7 +131,7 @@ if(!isset($_SESSION['customers_loggedin'])){
                       ?>
                       <tr>
                          <td><?php echo $customer['customer_fullname']?></td>
-                         <td><a href="view_orders.php">View orders</a></td>
+                         <td><button class="btn btn-warning"><a href="view_orders.php">View orders</a></button></td>
                       </tr>
                        
 
@@ -146,19 +146,6 @@ if(!isset($_SESSION['customers_loggedin'])){
                     
               </div>
               
-              <div class="col-md d-flex  justify-content-between">
-                <div class="col-md-4">
-                  <h5>Total = N3600</h5>
-                </div>
-
-                <div class="col-md-4">
-                  <button class="btn btn-warning btn-md rounded-0">Confirm Order</button>
-                </div>
-
-                <div class="col-md-4">
-                    <button class="btn btn-warning btn-md rounded-0">Done</button>
-                  </div>
-              </div>
             </div>
 
           </div>
@@ -219,5 +206,6 @@ if(!isset($_SESSION['customers_loggedin'])){
   </div>
 </div>
 <!-- offcanvas ends here -->
+
 </body>
 </html>

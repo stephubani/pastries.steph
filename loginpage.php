@@ -105,6 +105,7 @@ require_once "classes/Customer.php";
 
                 <div class="text-center mt-5">
                   <p>Dont have an account? <a href="registerpage.php">Register</a></p>
+                  <h6>Are you a staff? <a href="admin/adminlogin_page.php">Login here</a></h6>
                 </div>
  
             </form>

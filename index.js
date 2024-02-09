@@ -2,25 +2,29 @@ $(document).ready(function(){
   // function add_cart(){
  
   // }
-  $('.add_cart').click(function(){
-      // add_cart();
-      var product_details = $(this).closest('.product_details');
-      var product_id = product_details.find(".product_id").val();
-      // alert(product_id);
-      // return;
-      
-       $.ajax({
-           type: 'GET',
-           url: 'process/process_add_tocart.php',
-           data: {'product_id': product_id},
-           success: function(response){
-               // // Update the cart count 
-    
-               $('#cart_system').text(response);
-               console.log(response);
-           }
-       });
+  $('.add_cart').click(function(event){
+      addToCart(event)
+     
   });
+
+  function addToCart(event){
+    var product_details = $(event.target).closest('.product_details');
+    var product_id = product_details.find(".product_id").val();
+    // alert(product_id);
+    // return;
+    
+     $.ajax({
+         type: 'GET',
+         url: 'process/process_add_tocart.php',
+         data: {'product_id': product_id},
+         success: function(response){
+             // // Update the cart count 
+  
+             $('#cart_system').text(response);
+             console.log(response);
+         }
+     });
+  }
     
     // sorting category.
 
@@ -38,6 +42,7 @@ $(document).ready(function(){
         },
         success : function(response){
           $('.sorted_product').html(response);
+        
         }
       });
     }

@@ -145,7 +145,7 @@ if(isset($_SESSION['cart'])){
                 echo "<a href='registerpage.php' class='btn btn-warning btn-lg'>Sign Up</a>";
               }
               ?>
-              </div>
+            </div>
           </div>
         </div>
 
@@ -232,7 +232,7 @@ if(isset($_SESSION['cart'])){
                 <p id="product_desc"><?php echo $value['products_description']?></p>
                 <p id="product_price">Price :<?php echo $value['product_price']?></p>
                 <div class="butt">
-                  <button class="btn btn-dark  add_cart">Add To Cart 
+                <button class="btn btn-dark add_cart" id="addcart_'<?php echo $product['product_id'] ?> '">Add To Cart 
                     <i class="fa-solid fa-cart-shopping fa-beat-fade" style=" color:rgb(241, 241, 121);"></i>
                   </button>
                 </div>

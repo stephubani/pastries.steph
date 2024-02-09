@@ -73,7 +73,7 @@ if(isset($_SESSION['customer_active'])){
                       </li>
 
                       <li class="nav-item">
-                        <a class="nav-link active redesigned" aria-current="page" href="customer_details" style="font-size: 15px;">Customer Details</a>
+                        <a class="nav-link active redesigned" aria-current="page" href="customer_details.php" style="font-size: 15px;">Customer Details</a>
                       </li>
 
                       <li class="nav-item">
@@ -150,7 +150,7 @@ if(isset($_SESSION['customer_active'])){
                         }
                       }else{
                       ?>
-                        <div class="alert alert-danger">Nothing In Cart</div>
+                        <div class="alert alert-danger">Nothing In This Users Cart</div>
                        <?php
                       }
                       ?>
@@ -161,17 +161,22 @@ if(isset($_SESSION['customer_active'])){
               
               <div class="col-md d-flex  justify-content-between">
                 <div class="col-md-4">
-                  <h5>Total = N3600</h5>
+                <h5>Total <?php 
+                    $totalQuantity = 0; 
+                    if (isset($_SESSION['cart'])) {
+                      foreach ($_SESSION['cart'] as $product_id => $quantity) {
+                        $product = $products->fetch_product_byid($product_id);
+                        $totalQuantity = $totalQuantity+($quantity * $product['product_price']);                                            
+                      }
+                    }
+                    echo $totalQuantity;
+                  ?> </h5>
                 </div>
 
                 <div class="col-md-4">
-                  <button class="btn btn-warning btn-md rounded-0">Confirm Order</button>
+                  <button class="btn btn-warning btn-md rounded-0" id="confirm_pay">Confirm Order</button>
                 </div>
 
-                <div class="col-md-4">
-                    <button class="btn btn-warning btn-md rounded-0">Done</button>
-                  </div>
-              </div>
             </div>
 
           </div>
@@ -232,5 +237,15 @@ if(isset($_SESSION['customer_active'])){
   </div>
 </div>
 <!-- offcanvas ends here -->
+<script src="../jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('#confirm_pay').click(function(){
+      
+       $('#confirm_pay').text('Done');
+    })
+   
+  })
+</script>
 </body>
 </html>

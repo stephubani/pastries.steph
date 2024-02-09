@@ -14,7 +14,6 @@ if(!empty($_GET['product_id'])){
 
     if(array_key_exists($product_id, $_SESSION['cart'])){
        $_SESSION['error_message'] = 'You have added this product to cart';
-    //    header('location:../index.php');
        
     }else{
          $_SESSION['cart'][$product_id] = 1 ;
